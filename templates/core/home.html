@@ -1,0 +1,55 @@
+{% extends 'base.html' %}
+{% load i18n %}
+{% load static %}
+
+{% block title %}{% trans "Welcome to Ireneo SMS" %}{% endblock %}
+
+{% block content %}
+<div class="row align-items-center">
+    <div class="col-md-6">
+        <h1 class="display-4">{% trans "Welcome to Ireneo" %}</h1>
+        <p class="lead">{% trans "A comprehensive School Management System designed for South Sudan schools." %}</p>
+        <p>{% trans "Manage students, academics, staff, and school operations with our easy-to-use platform." %}</p>
+        <div class="mt-4">
+            {% if user.is_authenticated %}
+            <a href="{% url 'dashboard' %}" class="btn btn-primary btn-lg">{% trans "Go to Dashboard" %}</a>
+            {% else %}
+            <a href="{% url 'login' %}" class="btn btn-primary btn-lg">{% trans "Login" %}</a>
+            {% endif %}
+        </div>
+    </div>
+    <div class="col-md-6 text-center">
+        <img src="{% static 'img/school.svg' %}" alt="School illustration" class="img-fluid">
+    </div>
+</div>
+
+<div class="row mt-5">
+    <div class="col-md-4">
+        <div class="card mb-4">
+            <div class="card-body text-center">
+                <i class="bi bi-people fs-1 text-primary mb-3"></i>
+                <h3>{% trans "Student Management" %}</h3>
+                <p>{% trans "Manage admissions, attendance, and student records efficiently." %}</p>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="card mb-4">
+            <div class="card-body text-center">
+                <i class="bi bi-book fs-1 text-primary mb-3"></i>
+                <h3>{% trans "Academic Excellence" %}</h3>
+                <p>{% trans "Track grades, manage exams, and generate report cards." %}</p>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="card mb-4">
+            <div class="card-body text-center">
+                <i class="bi bi-graph-up fs-1 text-primary mb-3"></i>
+                <h3>{% trans "Comprehensive Reports" %}</h3>
+                <p>{% trans "Generate insights with detailed analytics and reports." %}</p>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

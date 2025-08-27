@@ -1,0 +1,53 @@
+{% extends 'base.html' %}
+{% load i18n %}
+{% load django_bootstrap5 %}
+
+{% block title %}{% trans "Profile" %} | Ireneo SMS{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-8">
+        <div class="card">
+            <div class="card-header bg-primary text-white">
+                <h4 class="mb-0">{% trans "User Profile" %}</h4>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-4 text-center mb-3">
+                        {% if user.profile_picture %}
+                            <img src="{{ user.profile_picture.url }}" alt="{{ user.get_full_name }}" class="img-fluid rounded-circle mb-3" style="max-width: 150px;">
+                        {% else %}
+                            <div class="bg-light rounded-circle d-flex align-items-center justify-content-center mx-auto mb-3" style="width: 150px; height: 150px;">
+                                <span class="display-4 text-secondary">{{ user.first_name|first|upper }}{{ user.last_name|first|upper }}</span>
+                            </div>
+                        {% endif %}
+                        <a href="{% url 'edit_profile' %}" class="btn btn-primary">{% trans "Edit Profile" %}</a>
+                    </div>
+                    <div class="col-md-8">
+                        <h3>{{ user.get_full_name }}</h3>
+                        <p class="text-muted">{{ user.get_role_display }}</p>
+                        
+                        <div class="mb-3">
+                            <h5>{% trans "Contact Information" %}</h5>
+                            <p><strong>{% trans "Email" %}:</strong> {{ user.email }}</p>
+                            <p><strong>{% trans "Phone" %}:</strong> {{ user.phone_number|default:"--" }}</p>
+                        </div>
+                        
+                        <div class="mb-3">
+                            <h5>{% trans "Address" %}</h5>
+                            <p>{{ user.address|default:"--" }}</p>
+                        </div>
+                        
+                        <div class="mb-3">
+                            <h5>{% trans "Account Information" %}</h5>
+                            <p><strong>{% trans "Username" %}:</strong> {{ user.username }}</p>
+                            <p><strong>{% trans "Language Preference" %}:</strong> {{ user.get_language_preference_display }}</p>
+                            <p><strong>{% trans "Last Login" %}:</strong> {{ user.last_login }}</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

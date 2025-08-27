@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container mt-5">
+    <h2>{{ title }}</h2>
+    <div class="list-group">
+        {% for applicant in applicants %}
+            <a href="{% url 'students:applicant_detail' applicant.pk %}" class="list-group-item list-group-item-action">
+                <div class="d-flex w-100 justify-content-between">
+                    <h5 class="mb-1">{{ applicant.first_name }} {{ applicant.last_name }}</h5>
+                    <small>{{ applicant.application_date }}</small>
+                </div>
+                <p class="mb-1">Applying for: {{ applicant.class_applying_for }}</p>
+                <small>Status: <span class="badge bg-secondary">{{ applicant.get_status_display }}</span></small>
+            </a>
+        {% empty %}
+            <p class="list-group-item">No applicants found.</p>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}

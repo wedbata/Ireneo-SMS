@@ -1,0 +1,138 @@
+{% load i18n %}
+<nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+    <div class="container">
+        <a class="navbar-brand" href="{% url 'home' %}">Ireneo SMS</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav me-auto">
+                {% if user.is_authenticated %}
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'dashboard' %}">{% trans "Dashboard" %}</a>
+                </li>
+                {% if user.is_admin or user.is_principal or user.is_teacher %}
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="studentsDropdown" role="button" data-bs-toggle="dropdown">
+                        {% trans "Students" %}
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li><a class="dropdown-item" href="#">{% trans "Student List" %}</a></li>
+                        <li><a class="dropdown-item" href="#">{% trans "Admissions" %}</a></li>
+                        <li><a class="dropdown-item" href="#">{% trans "Attendance" %}</a></li>
+                    </ul>
+                </li>
+                {% endif %}
+                
+                {% if user.is_admin or user.is_principal or user.is_teacher %}
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="academicsDropdown" role="button" data-bs-toggle="dropdown">
+                        {% trans "Academics" %}
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li><a class="dropdown-item" href="{% url 'academics:subject_list' %}">{% trans "Subjects" %}</a></li>
+                        <li><a class="dropdown-item" href="#">{% trans "Gradebook" %}</a></li>
+                        <li><a class="dropdown-item" href="#">{% trans "Timetable" %}</a></li>
+                        <li><a class="dropdown-item" href="#">{% trans "Exams" %}</a></li>
+                    </ul>
+                </li>
+                {% endif %}
+                
+                {% if user.is_admin or user.is_principal %}
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="staffDropdown" role="button" data-bs-toggle="dropdown">
+                        {% trans "Staff" %}
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li><a class="dropdown-item" href="#">{% trans "Staff List" %}</a></li>
+                        <li><a class="dropdown-item" href="#">{% trans "Leave Management" %}</a></li>
+                        <li><a class="dropdown-item" href="#">{% trans "Payroll" %}</a></li>
+                    </ul>
+                </li>
+                {% endif %}
+                
+                {% if user.is_admin or user.is_finance %}
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="financeDropdown" role="button" data-bs-toggle="dropdown">
+                        {% trans "Finance" %}
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li><a class="dropdown-item" href="#">{% trans "Fee Management" %}</a></li>
+                        <li><a class="dropdown-item" href="{% url 'finance:expense_list' %}">{% trans "Expenses" %}</a></li>
+                        <li><a class="dropdown-item" href="#">{% trans "Scholarships" %}</a></li>
+                    </ul>
+                </li>
+                {% endif %}
+                
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="communicationDropdown" role="button" data-bs-toggle="dropdown">
+                        {% trans "Communication" %}
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li><a class="dropdown-item" href="#">{% trans "Messages" %}</a></li>
+                        <li><a class="dropdown-item" href="#">{% trans "Announcements" %}</a></li>
+                        <li><a class="dropdown-item" href="#">{% trans "Calendar" %}</a></li>
+                    </ul>
+                </li>
+                
+                {% if user.is_admin or user.is_principal %}
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="reportsDropdown" role="button" data-bs-toggle="dropdown">
+                        {% trans "Reports" %}
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li><a class="dropdown-item" href="#">{% trans "Academic Reports" %}</a></li>
+                        <li><a class="dropdown-item" href="{% url 'reports:attendance_report' %}">{% trans "Attendance Reports" %}</a></li>
+                        <li><a class="dropdown-item" href="#">{% trans "Financial Reports" %}</a></li>
+                    </ul>
+                </li>
+                {% endif %}
+                {% endif %}
+            </ul>
+            
+            <ul class="navbar-nav ms-auto">
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="languageDropdown" role="button" data-bs-toggle="dropdown">
+                        {% trans "Language" %}
+                    </a>
+                    <ul class="dropdown-menu dropdown-menu-end">
+                        <li>
+                            <form action="{% url 'set_language' %}" method="post">
+                                {% csrf_token %}
+                                <input name="next" type="hidden" value="{{ request.path }}">
+                                <input name="language" type="hidden" value="en">
+                                <button type="submit" class="dropdown-item">English</button>
+                            </form>
+                        </li>
+                        <li>
+                            <form action="{% url 'set_language' %}" method="post">
+                                {% csrf_token %}
+                                <input name="next" type="hidden" value="{{ request.path }}">
+                                <input name="language" type="hidden" value="ar">
+                                <button type="submit" class="dropdown-item">العربية</button>
+                            </form>
+                        </li>
+                    </ul>
+                </li>
+                
+                {% if user.is_authenticated %}
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-bs-toggle="dropdown">
+                        {{ user.get_full_name|default:user.username }}
+                    </a>
+                    <ul class="dropdown-menu dropdown-menu-end">
+                        <li><a class="dropdown-item" href="#">{% trans "Profile" %}</a></li>
+                        <li><a class="dropdown-item" href="#">{% trans "Change Password" %}</a></li>
+                        <li><hr class="dropdown-divider"></li>
+                        <li><a class="dropdown-item" href="{% url 'logout' %}">{% trans "Logout" %}</a></li>
+                    </ul>
+                </li>
+                {% else %}
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'login' %}">{% trans "Login" %}</a>
+                </li>
+                {% endif %}
+            </ul>
+        </div>
+    </div>
+</nav>

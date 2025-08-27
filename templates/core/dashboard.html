@@ -1,0 +1,167 @@
+{% extends 'base.html' %}
+{% load i18n %}
+
+{% block title %}{% trans "Dashboard" %} | Ireneo SMS{% endblock %}
+
+{% block content %}
+<h1 class="mb-4">{% trans "Dashboard" %}</h1>
+
+<div class="row">
+    <!-- Admin/Principal Dashboard -->
+    {% if user.is_admin or user.is_principal %}
+    <div class="col-md-3 mb-4">
+        <div class="card bg-primary text-white">
+            <div class="card-body">
+                <h5 class="card-title">{% trans "Students" %}</h5>
+                <p class="card-text display-4">0</p>
+                <a href="#" class="text-white">{% trans "View Details" %} →</a>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3 mb-4">
+        <div class="card bg-success text-white">
+            <div class="card-body">
+                <h5 class="card-title">{% trans "Teachers" %}</h5>
+                <p class="card-text display-4">0</p>
+                <a href="#" class="text-white">{% trans "View Details" %} →</a>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3 mb-4">
+        <div class="card bg-info text-white">
+            <div class="card-body">
+                <h5 class="card-title">{% trans "Classes" %}</h5>
+                <p class="card-text display-4">0</p>
+                <a href="#" class="text-white">{% trans "View Details" %} →</a>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3 mb-4">
+        <div class="card bg-warning text-dark">
+            <div class="card-body">
+                <h5 class="card-title">{% trans "Attendance" %}</h5>
+                <p class="card-text display-4">0%</p>
+                <a href="#" class="text-dark">{% trans "View Details" %} →</a>
+            </div>
+        </div>
+    </div>
+    {% endif %}
+    
+    <!-- Teacher Dashboard -->
+    {% if user.is_teacher %}
+    <div class="col-md-4 mb-4">
+        <div class="card bg-primary text-white">
+            <div class="card-body">
+                <h5 class="card-title">{% trans "My Classes" %}</h5>
+                <p class="card-text display-4">0</p>
+                <a href="#" class="text-white">{% trans "View Details" %} →</a>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4 mb-4">
+        <div class="card bg-success text-white">
+            <div class="card-body">
+                <h5 class="card-title">{% trans "Assignments" %}</h5>
+                <p class="card-text display-4">0</p>
+                <a href="#" class="text-white">{% trans "View Details" %} →</a>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4 mb-4">
+        <div class="card bg-info text-white">
+            <div class="card-body">
+                <h5 class="card-title">{% trans "Today's Schedule" %}</h5>
+                <p class="card-text">{% trans "View your classes for today" %}</p>
+                <a href="#" class="text-white">{% trans "View Details" %} →</a>
+            </div>
+        </div>
+    </div>
+    {% endif %}
+    
+    <!-- Student Dashboard -->
+    {% if user.is_student %}
+    <div class="col-md-4 mb-4">
+        <div class="card bg-primary text-white">
+            <div class="card-body">
+                <h5 class="card-title">{% trans "My Courses" %}</h5>
+                <p class="card-text display-4">0</p>
+                <a href="#" class="text-white">{% trans "View Details" %} →</a>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4 mb-4">
+        <div class="card bg-success text-white">
+            <div class="card-body">
+                <h5 class="card-title">{% trans "Assignments Due" %}</h5>
+                <p class="card-text display-4">0</p>
+                <a href="#" class="text-white">{% trans "View Details" %} →</a>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4 mb-4">
+        <div class="card bg-info text-white">
+            <div class="card-body">
+                <h5 class="card-title">{% trans "Attendance" %}</h5>
+                <p class="card-text display-4">0%</p>
+                <a href="#" class="text-white">{% trans "View Details" %} →</a>
+            </div>
+        </div>
+    </div>
+    {% endif %}
+    
+    <!-- Parent Dashboard -->
+    {% if user.is_parent %}
+    <div class="col-md-4 mb-4">
+        <div class="card bg-primary text-white">
+            <div class="card-body">
+                <h5 class="card-title">{% trans "My Children" %}</h5>
+                <p class="card-text display-4">0</p>
+                <a href="#" class="text-white">{% trans "View Details" %} →</a>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4 mb-4">
+        <div class="card bg-success text-white">
+            <div class="card-body">
+                <h5 class="card-title">{% trans "Fee Status" %}</h5>
+                <p class="card-text">{% trans "Check payment status" %}</p>
+                <a href="#" class="text-white">{% trans "View Details" %} →</a>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4 mb-4">
+        <div class="card bg-info text-white">
+            <div class="card-body">
+                <h5 class="card-title">{% trans "Academic Progress" %}</h5>
+                <p class="card-text">{% trans "View grades and reports" %}</p>
+                <a href="#" class="text-white">{% trans "View Details" %} →</a>
+            </div>
+        </div>
+    </div>
+    {% endif %}
+</div>
+
+<div class="row">
+    <div class="col-md-8 mb-4">
+        <div class="card">
+            <div class="card-header">
+                <h5 class="mb-0">{% trans "Recent Announcements" %}</h5>
+            </div>
+            <div class="card-body">
+                <p class="text-muted">{% trans "No announcements yet." %}</p>
+            </div>
+        </div>
+    </div>
+    
+    <div class="col-md-4 mb-4">
+        <div class="card">
+            <div class="card-header">
+                <h5 class="mb-0">{% trans "Upcoming Events" %}</h5>
+            </div>
+            <div class="card-body">
+                <p class="text-muted">{% trans "No upcoming events." %}</p>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

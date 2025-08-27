@@ -1,0 +1,45 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container mt-5">
+    <h2>{{ title }}</h2>
+    <div class="card">
+        <div class="card-header">
+            <h3>{{ applicant.first_name }} {{ applicant.last_name }}</h3>
+        </div>
+        <div class="card-body">
+            <p><strong>Email:</strong> {{ applicant.email }}</p>
+            <p><strong>Phone:</strong> {{ applicant.phone_number }}</p>
+            <p><strong>Date of Birth:</strong> {{ applicant.date_of_birth }}</p>
+            <p><strong>Gender:</strong> {{ applicant.get_gender_display }}</p>
+            <p><strong>Address:</strong> {{ applicant.address }}</p>
+            <p><strong>Previous School:</strong> {{ applicant.previous_school }}</p>
+            <p><strong>Applying for Class:</strong> {{ applicant.class_applying_for }}</p>
+            <p><strong>Application Date:</strong> {{ applicant.application_date }}</p>
+            <p><strong>Status:</strong> <span class="badge bg-info">{{ applicant.get_status_display }}</span></p>
+            <hr>
+            <h4>Documents</h4>
+            <ul>
+                {% if applicant.birth_certificate %}
+                    <li><a href="{{ applicant.birth_certificate.url }}" target="_blank">Birth Certificate</a></li>
+                {% endif %}
+                {% if applicant.previous_report_card %}
+                    <li><a href="{{ applicant.previous_report_card.url }}" target="_blank">Previous Report Card</a></li>
+                {% endif %}
+            </ul>
+        </div>
+        <div class="card-footer">
+            <a href="{% url 'students:applicant_list' %}" class="btn btn-secondary">Back to List</a>
+            {% if user.is_admin %}
+                {% if applicant.status == 'PENDING' or applicant.status == 'REVIEW' %}
+                    <form action="{% url 'students:accept_applicant' applicant.pk %}" method="post" class="d-inline">
+                        {% csrf_token %}
+                        <button type="submit" class="btn btn-success">Accept</button>
+                    </form>
+                    <a href="#" class="btn btn-danger">Reject</a> {# Placeholder for reject functionality #}
+                {% endif %}
+            {% endif %}
+        </div>
+    </div>
+</div>
+{% endblock %}
